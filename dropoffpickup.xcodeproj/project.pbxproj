@@ -33,6 +33,7 @@
 		43E9FC9B1A83A7FE00DB023F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E9FC9A1A83A7FE00DB023F /* libz.dylib */; };
 		43E9FC9D1A83A80600DB023F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E9FC9C1A83A80600DB023F /* libsqlite3.dylib */; };
 		43E9FC9F1A83A9EE00DB023F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E9FC9E1A83A9EE00DB023F /* Social.framework */; };
+		43FFCF7E1A8A64B000C6417B /* DropedOffPickedUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FFCF7D1A8A64B000C6417B /* DropedOffPickedUpTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		43E9FC9A1A83A7FE00DB023F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		43E9FC9C1A83A80600DB023F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		43E9FC9E1A83A9EE00DB023F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		43FFCF7D1A8A64B000C6417B /* DropedOffPickedUpTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropedOffPickedUpTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			children = (
 				43E9FC7B1A83A79B00DB023F /* parse-library-1.6.2 */,
 				43E9FC571A839F4A00DB023F /* AppDelegate.swift */,
+				43FFCF7D1A8A64B000C6417B /* DropedOffPickedUpTableViewCell.swift */,
 				43E9FC591A839F4A00DB023F /* FirstViewController.swift */,
 				43E9FC5B1A839F4A00DB023F /* SecondViewController.swift */,
 				43E9FC5D1A839F4A00DB023F /* Main.storyboard */,
@@ -299,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43E9FC5C1A839F4A00DB023F /* SecondViewController.swift in Sources */,
+				43FFCF7E1A8A64B000C6417B /* DropedOffPickedUpTableViewCell.swift in Sources */,
 				43E9FC581A839F4A00DB023F /* AppDelegate.swift in Sources */,
 				43E9FC7A1A83A70800DB023F /* DropOffPickUp.swift in Sources */,
 				43E9FC5A1A839F4A00DB023F /* FirstViewController.swift in Sources */,
