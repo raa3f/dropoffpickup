@@ -53,21 +53,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         return btnDroppedOffPickedUp.titleLabel!.text!
     }
-    
-   /* func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return  2
-    } */
-    
-//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        
-//        switch(section){
-//        case 0: return "Section 0"
-//        case 1: return "Section 1"
-//        case 2: return "Section 1"
-//        default: return "default header title"
-//        }
-//        
-//    }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if objectArray == nil {
