@@ -15,18 +15,20 @@ class SecondViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objectArray.count
+        return dropOffArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         var cell: DropedOffPickedUpTableViewCell = tableView.dequeueReusableCellWithIdentifier("DropedOffPickedUpTableViewCell") as DropedOffPickedUpTableViewCell
         dateformatter.dateFormat = kDateFormatString
-        cell.droppedOffBy.text = objectArray[indexPath.row][kTableField_By] as NSString
-        cell.droppedOffAt.text = NSString(format: "%@", dateformatter.stringFromDate(objectArray[indexPath.row][kTableField_Time] as NSDate))
         
-        cell.pickedUpBy.text = objectArray[indexPath.row+1][kTableField_By] as NSString
-        cell.pickedUpAt.text = NSString(format: "%@", dateformatter.stringFromDate(objectArray[indexPath.row+1][kTableField_Time] as NSDate))
-            
+        cell.droppedOffBy.text = dropOffArray[indexPath.row][kTFDropOffPickUp_By] as NSString
+        cell.droppedOffAt.text = NSString(format: "%@", dateformatter.stringFromDate(dropOffArray[indexPath.row][kTFDropOffPickUp_Time] as NSDate))
+        
+        cell.pickedUpBy.text = pickUpArray[indexPath.row][kTFDropOffPickUp_By] as NSString
+        cell.pickedUpAt.text = NSString(format: "%@", dateformatter.stringFromDate(pickUpArray[indexPath.row][kTFDropOffPickUp_Time] as NSDate))
+        
         cell.totalTime.text = "total will be displayed here" as NSString
         
         return cell

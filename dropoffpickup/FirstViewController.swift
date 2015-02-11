@@ -16,17 +16,19 @@ let kUpdatedAt: String = "updatedAt"
 let kDateFormatString: String = "hh:mm MMM dd"
 let kDropOffPickUpTableName: String = "DropOffPickUp"
 
-let kTableField_By: String = "By"
-let kTableField_Status: String = "Status"
-let kTableField_Time: String = "Time"
-let kTableField_Username: String = "username"
+let kTFDropOffPickUp_By: String = "By"
+let kTFDropOffPickUp_Status: String = "Status"
+let kTFDropOffPickUp_Time: String = "Time"
+let kTFCurrentUser_Username: String = "username"
 
 var dateformatter: NSDateFormatter = NSDateFormatter()
+var dropOffArray: [PFObject]!
+var pickUpArray: [PFObject]!
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var objectArray: [PFObject]!
-
+    
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var btnDroppedOffPickedUp: UIButton!
@@ -68,12 +70,12 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if (objectArray==nil) {
             cell.textLabel?.text = "No record found"
         }else{
-            cell.textLabel?.text = objectArray[indexPath.row][kTableField_Status] as NSString
+            cell.textLabel?.text = objectArray[indexPath.row][kTFDropOffPickUp_Status] as NSString
         }
         
         dateformatter.dateFormat = kDateFormatString
         var updatedAtDateString = NSString(format: "%@", dateformatter.stringFromDate(objectArray[indexPath.row].updatedAt))
-        cell.detailTextLabel?.text = (objectArray[indexPath.row])[kTableField_By] as NSString + " at \(updatedAtDateString)"
+        cell.detailTextLabel?.text = (objectArray[indexPath.row])[kTFDropOffPickUp_By] as NSString + " at \(updatedAtDateString)"
         
         return cell
     }
@@ -103,27 +105,43 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func ReloadData(){
         self.objectArray = []
+        pickUpArray = []
+        dropOffArray = []
+        
+        var todaysDateTime: NSDate = NSDate()
+        var todaysDateComponent = NSDateComponents()
+        todaysDateComponent.day = -1
+        var cal = NSCalendar.currentCalendar()
+        var yesterdaysDate = cal.dateByAddingComponents(todaysDateComponent, toDate: todaysDateTime, options: NSCalendarOptions.allZeros)
+        
         var query = PFQuery(className:kDropOffPickUpTableName)
-        query.whereKey(kUpdatedAt, lessThanOrEqualTo:NSDate())
+        query.whereKey(kUpdatedAt, greaterThan:yesterdaysDate)
         query.orderByDescending(kUpdatedAt)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if error == nil {
-                
-                for object in objects as [PFObject]{
-                    self.objectArray.append(object)
-                }
-                
-                if (self.objectArray[0] as PFObject)[kTableField_Status] as NSString == kDropedOff {
-                    self.btnDroppedOffPickedUp.titleLabel?.text = kPickedUp
+            if objects.count > 0 {
+                if error == nil {
+                    
+                    for object in objects as [PFObject]{
+                        self.objectArray.append(object)
+                        
+                        if object[kTFDropOffPickUp_Status] as NSString == kDropedOff {
+                            dropOffArray.append(object)
+                        } else {
+                            pickUpArray.append(object)
+                        }
+                    }
+                    
+                    if (self.objectArray[0] as PFObject)[kTFDropOffPickUp_Status] as NSString == kDropedOff {
+                        self.btnDroppedOffPickedUp.titleLabel?.text = kPickedUp
+                    } else {
+                        self.btnDroppedOffPickedUp.titleLabel?.text = kDropedOff
+                    }
                 } else {
-                    self.btnDroppedOffPickedUp.titleLabel?.text = kDropedOff
+                    // Log details of the failure
+                    NSLog("Error: %@ %@", error, error.userInfo!)
                 }
-            } else {
-                // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo!)
             }
-            
             self.tableView.reloadData()
         }
     }
@@ -141,9 +159,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         var dropOffPickUp = PFObject(className:kDropOffPickUpTableName)
-        dropOffPickUp[kTableField_By] = currentUser[kTableField_Username]
-        dropOffPickUp[kTableField_Time] = datePicker.date
-        dropOffPickUp[kTableField_Status] = droppedofforpickedup
+        dropOffPickUp[kTFDropOffPickUp_By] = currentUser[kTFCurrentUser_Username]
+        dropOffPickUp[kTFDropOffPickUp_Time] = datePicker.date
+        dropOffPickUp[kTFDropOffPickUp_Status] = droppedofforpickedup
         
         dropOffPickUp.saveInBackgroundWithBlock {
             (success: Bool, error: NSError!) -> Void in
